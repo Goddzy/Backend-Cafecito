@@ -7,7 +7,7 @@ export const listarProductos = async (req, res) => {
     res.status(200).json(productos);
   } catch (error) {
     console.log(error);
-    res.status(404).json({mensaje:'Error al buscar los productos'})
+    res.status(404).json({ mensaje: "Error al buscar los productos" });
   }
 };
 export const crearProducto = async (req, res) => {
@@ -26,16 +26,30 @@ export const crearProducto = async (req, res) => {
   }
 };
 
-export const obtenerProducto = async(req,res)=>{
-  try{
+export const obtenerProducto = async (req, res) => {
+  try {
     //extraer el id de la ruta
     // console.log(req.params.id)
     //buscar en la BD el producto que coincida con el id
     const productoBuscado = await Producto.findById(req.params.id);
     //responder con el producto encontrado
     res.status(200).json(productoBuscado);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ mensaje: "error al buscar producto" });
+  }
+};
 
-  }catch(error)
-  {console.log(error)
-   res.status(404).json({mensaje:"error al buscar producto"})}
-}
+export const editarProducto = async (req, res) => {
+  try {
+    //extraer el parámetro de la ruta y los datos del objeto que quiero actualizar
+    //validar los datos y luego solicitar a la base de datos actualizar el producto
+    await Producto.findByIdAndUpdate(req.params.id, req.body);
+    //respondemos al frontend
+    res.status(200).json({mensaje:'el producto pudo ser editado correctamente'})
+
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({mensaje:'Error al intentar editar un producto'})
+  }
+};
