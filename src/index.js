@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import path from 'path' //viene de nodejs
 //llamar a la conexión a la base de datos
 import './database'
+import productoRouter from './routes/productos.routes';
 
 //crear una isntancia de express
 const app = express();
@@ -25,8 +26,6 @@ app.use(morgan('dev')) //otorga más información sobre las peticiones en la con
 app.use(express.static(path.join(__dirname, '../public')));
 // console.log(path.join(__dirname, '../public'));
 
-//rutas
-//http://localhost:4000/prueba
-app.get('/prueba', (req, res)=>{
-  res.send('esto es una prueba de una petición get')
-})
+//rutas las rutas están en la carpeta "routes"
+//http://localhost:4000/apicafe/prueba
+app.use('/apicafe', productoRouter)
